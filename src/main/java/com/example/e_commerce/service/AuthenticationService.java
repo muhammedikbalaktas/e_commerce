@@ -43,7 +43,7 @@ public class AuthenticationService {
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setRole(request.getRole());
         Balance balance=new Balance();
-        balance.setMoney(0);
+        balance.setMoney(1000);
         balance.setUser(user);
         user.setBalance(balance);
         user=userRepository.save(user);

@@ -1,5 +1,6 @@
 package com.example.e_commerce.model;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -58,12 +59,12 @@ public class User implements UserDetails{
         inverseJoinColumns = @JoinColumn(name="product_id")
     )
     @JsonManagedReference
-    private Set<Product> basket=new HashSet<>();
+    private List<Product> basket=new ArrayList<>();
 
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     @JsonManagedReference
-    private List<Order> orders=new ArrayList<>();
+    private Set<Order> orders=new HashSet<>();
 
 
     @OneToOne(mappedBy = "user",cascade = CascadeType.ALL)
@@ -102,6 +103,8 @@ public class User implements UserDetails{
         }
         order.setTotalPrice(price);
         basket.clear();
+        order.setUser(this);
+        order.setOrderDate(LocalDateTime.now());
         orders.add(order);
 
         return true;
@@ -215,13 +218,7 @@ public class User implements UserDetails{
     
 
 
-    public Set<Product> getBasket() {
-        return basket;
-    }
-
-    public void setBasket(Set<Product> basket) {
-        this.basket = basket;
-    }
+    
 
     
 
@@ -233,11 +230,21 @@ public class User implements UserDetails{
         this.balance = balance;
     }
 
-    public List<Order> getOrders() {
+    
+
+    public List<Product> getBasket() {
+        return basket;
+    }
+
+    public void setBasket(List<Product> basket) {
+        this.basket = basket;
+    }
+
+    public Set<Order> getOrders() {
         return orders;
     }
 
-    public void setOrders(List<Order> orders) {
+    public void setOrders(Set<Order> orders) {
         this.orders = orders;
     }
 

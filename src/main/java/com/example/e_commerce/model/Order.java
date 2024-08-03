@@ -1,8 +1,8 @@
 package com.example.e_commerce.model;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -18,7 +18,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "orders")
+@Table(name = "done_order")
 public class Order {
 
     @Id
@@ -38,12 +38,12 @@ public class Order {
 
     @ManyToMany
     @JoinTable(
-        name = "_orders_",
+        name = "orders",
         joinColumns = @JoinColumn(name="order_id"),
         inverseJoinColumns=@JoinColumn(name = "product_id")
     )
     @JsonManagedReference
-    private Set<Product> products=new HashSet<>();
+    private List<Product> products=new ArrayList<>();
 
     /*
      * GETTERS AND SETTERS
@@ -88,14 +88,17 @@ public class Order {
     }
 
 
-    public Set<Product> getProducts() {
+    public List<Product> getProducts() {
         return products;
     }
 
 
-    public void setProducts(Set<Product> products) {
+    public void setProducts(List<Product> products) {
         this.products = products;
     }
+
+
+    
 
     
 

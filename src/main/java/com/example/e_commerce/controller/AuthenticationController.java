@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.e_commerce.dao.UserLoginDao;
 import com.example.e_commerce.dao.UserRegisterDao;
 import com.example.e_commerce.model.AuthenticationResponse;
-import com.example.e_commerce.model.Balance;
 import com.example.e_commerce.model.Role;
 import com.example.e_commerce.model.User;
 import com.example.e_commerce.service.AuthenticationService;
@@ -39,10 +38,7 @@ public class AuthenticationController {
         User user=new User(request.getFirstName(),request.getLastName(),
         request.getUsername(),request.getPassword());
         user.setRole(Role.USER);
-        Balance balance=new Balance();
-        balance.setMoney(1000);
-        user.setBalance(balance);
-        balance.setUser(user);
+        
         return ResponseEntity.ok(authService.register(user));
         
     }
