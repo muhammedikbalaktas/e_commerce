@@ -33,7 +33,9 @@ public class ProductService {
         List<Product> products=this.getAllProduct();
 
         for (Product product : products) {
-            result.add(new ListProductDao(product.getId(), product.getName(), product.getColor(), product.getPrice(), 0));
+            result.add(new ListProductDao
+            (product.getId(), product.getName(), 
+            product.getColor(), product.getPrice(), product.getAmount()));
 
         }
 

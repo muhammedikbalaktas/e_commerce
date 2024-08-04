@@ -45,7 +45,10 @@ public class User implements UserDetails{
 
     private String password;
 
+    private boolean isNotBlocked=true;
     
+    
+
     @Enumerated(value = EnumType.STRING)
     private Role role;
 
@@ -80,35 +83,7 @@ public class User implements UserDetails{
         this.basket.remove(product);
     }
 
-    public boolean generateOrder(){
-        double price=0;
-
-        if(basket.isEmpty()){
-            System.out.println("basket is empty");
-            return false;
-        }
-        for (Product product : basket) {
-            price+=product.getPrice();
-        }
-
-        if(price>this.getBalance().getMoney())return false;
-
-        this.getBalance().setMoney(this.getBalance().getMoney()-price);
-        Order order=new Order();
-        for (Product product : basket) {
-            
-            order.getProducts().add(product);
-            product.setAmount(product.getAmount()-1);
-            
-        }
-        order.setTotalPrice(price);
-        basket.clear();
-        order.setUser(this);
-        order.setOrderDate(LocalDateTime.now());
-        orders.add(order);
-
-        return true;
-    }
+    
 
    
 
@@ -146,7 +121,7 @@ public class User implements UserDetails{
     @Override
     public boolean isAccountNonLocked() {
        
-        return true;
+        return isNotBlocked;
     }
 
 
@@ -219,7 +194,13 @@ public class User implements UserDetails{
 
 
     
+    public boolean isNotBlocked() {
+        return isNotBlocked;
+    }
 
+    public void setNotBlocked(boolean isNotBlocked) {
+        this.isNotBlocked = isNotBlocked;
+    }
     
 
     public Balance getBalance() {
